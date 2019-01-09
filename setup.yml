@@ -1,0 +1,9 @@
+---
+- name: setup
+  hosts: all
+  become: yes
+
+  tasks:
+  - import_tasks: tasks/bootstrap.yml
+  - import_tasks: tasks/apt-update.yml
+  - import_tasks: tasks/apt-install.yml
