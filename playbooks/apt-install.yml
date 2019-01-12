@@ -1,0 +1,23 @@
+---
+- name: ap install
+  hosts: all
+  become_method: sudo
+
+  tasks:
+    - name: apt install
+      apt:
+        pkg:
+          - curl
+          - git
+          - htop
+          - ipcalc
+          - lsof
+          - mc
+          - nmap
+          - rsync
+          - stow
+          - tig
+          - tmux
+          - ufw
+          - vim
+          - wget
