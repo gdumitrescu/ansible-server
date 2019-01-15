@@ -1,0 +1,44 @@
+---
+- name: rbenv
+  hosts: all
+
+  pre_tasks:
+    - name: install ruby missing extensions
+      become: yes
+      apt:
+        update_cache: yes
+        state: present
+        pkg:
+          - libssl-dev
+          - libreadline-dev
+          - zlib1g-dev
+ 
+  tasks:
+    - name: clone rbenv
+      git:
+        repo: https://github.com/sstephenson/rbenv.git
+        dest: '~/.rbenv'
+    - name: configure rbenv
+      blockinfile: 
+        path: '~/.bashrc'
+        block: |
+          # rbenv
+          export PATH="$HOME/.rbenv/bin:$PATH"
+          eval "$(rbenv init -)"
+        insertbefore: EOF
+    - name: prepare ruby-build 
+      file: 
+        path: '~/.rbenv/plugins'
+        state: directory
+        mode: 0755
+    - name: clone ruby-build
+      git:
+        repo: https://github.com/rbenv/ruby-build.git
+        dest: '~/.rbenv/plugins/ruby-build'
+
+  post_tasks:
+    - name: install ruby
+      command: '~/.rbenv/bin/rbenv install 2.4.5'
+    - name: configure ruby
+      command: '~/.rbenv/bin/rbenv global 2.4.5'
+
