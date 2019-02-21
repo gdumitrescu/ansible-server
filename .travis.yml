@@ -1,14 +1,30 @@
 ---
 language: python
-python: '2.7'
+python: "2.7"
+
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+    - os: linux
+      dist: xenial
+    - os: linux
+      dist: trusty
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -qq python-apt
 
 install:
-  - pip install ansible==2.7.5
+  - pip install ansible
 
 script:
-  - ansible-playbook -i hosts setup.yml --syntax-check
-  - ansible-playbook -i hosts setup.yml --connection=local --sudo
+  # syntax check
+  - "ansible-playbook -i hosts playbooks/bootstrap.yml --syntax-check"
+  - "ansible-playbook -i hosts playbooks/apt-install.yml --syntax-check"
+  - "ansible-playbook -i hosts playbooks/apt-update.yml --syntax-check"
+  - "ansible-playbook -i hosts playbooks/rbenv.yml --syntax-check"
+  - "ansible-playbook -i hosts site.yml --syntax-check"
+
+  # playbook test
+  - "ansible-playbook -i hosts site.yml --connection=local"
+

@@ -1,24 +1,25 @@
 ---
-- name: apt install
+- name: apt-install
   hosts: all
-  become_method: sudo
+  become: yes
 
   tasks:
-    - name: apt install
+  - name: apt => install
+    apt:
       state: present
-      apt:
-        pkg:
-          - curl
-          - git
-          - htop
-          - ipcalc
-          - lsof
-          - mc
-          - nmap
-          - rsync
-          - stow
-          - tig
-          - tmux
-          - ufw
-          - vim
-          - wget
+      pkg:
+        - aptitude
+        - curl
+        - git
+        - htop
+        - ipcalc
+        - lsof
+        - mc
+        - nmap
+        - rsync
+        - stow
+        - tig
+        - tmux
+        - ufw
+        - vim
+        - wget

@@ -5,18 +5,18 @@
   serial: 1
 
   tasks:
-  - name: apt update
+  - name: apt => update
     apt:
       update_cache: yes
-  - name: apt safe-upgrade
+  - name: apt => safe-upgrade
     command: aptitude safe-upgrade -y
-  - name: apt autoremove
+  - name: apt => autoremove
     apt:
       autoremove: yes
-  - name: apt autoclean
+  - name: apt => autoclean
     apt:
       autoclean: yes
-  - name: apt clean
+  - name: apt => clean
     command: apt clean -y
-  - name: apt purge
+  - name: apt => purge
     command: aptitude purge ~c -y

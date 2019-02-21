@@ -5,5 +5,5 @@
 
 - import_playbook: playbooks/bootstrap.yml
 - import_playbook: playbooks/apt-install.yml
+# - import_playbook: playbooks/apt-update.yml
 - import_playbook: playbooks/rbenv.yml
-

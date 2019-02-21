@@ -1,9 +1,9 @@
 ---
-- hosts: all
+- name: bootstrap
+  hosts: all
   become: true
 
-  pre_tasks:
-
-  - name: Install python for Ansible
+  tasks:
+  - name: bootstrap => install python for ansible
     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
     changed_when: false
