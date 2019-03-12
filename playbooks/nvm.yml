@@ -1,0 +1,43 @@
+---
+- name: nvm
+  hosts: all
+
+  tasks:
+  - name: nvm => clone nvm repo
+    git:
+        repo: https://github.com/creationix/nvm.git
+        dest: ~/.nvm/
+  - name: nvm => configure
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK NVM"
+      block: |
+        # nvm
+        source ~/.nvm/nvm.sh
+      insertbefore: EOF
+
+  post_tasks:
+  - name: nvm => version
+    shell: 'source ~/.nvm/nvm.sh && nvm --version'
+    args:
+      executable: /bin/bash
+  - name: nvm => install node lts
+    shell: 'source ~/.nvm/nvm.sh && nvm install --lts'
+    args:
+      executable: /bin/bash
+  - name: nvm => use node lts
+    shell: 'source ~/.nvm/nvm.sh && nvm use --lts'
+    args:
+      executable: /bin/bash
+  - name: nvm => configure alias node lts
+    shell: 'source ~/.nvm/nvm.sh && nvm alias default node'
+    args:
+      executable: /bin/bash
+  - name: nvm => node version
+    shell: 'source ~/.nvm/nvm.sh && node --version'
+    args:
+      executable: /bin/bash
+  - name: nvm => npm version
+    shell: 'source ~/.nvm/nvm.sh && npm --version'
+    args:
+      executable: /bin/bash
