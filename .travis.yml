@@ -8,8 +8,6 @@ matrix:
       dist: bionic
     - os: linux
       dist: xenial
-    - os: linux
-      dist: trusty
 
 before_install:
   - sudo apt-get update -qq
@@ -22,6 +20,7 @@ script:
   - "ansible-playbook -i hosts playbooks/bootstrap.yml --syntax-check"
   - "ansible-playbook -i hosts playbooks/apt-install.yml --syntax-check"
   - "ansible-playbook -i hosts playbooks/apt-update.yml --syntax-check"
+  - "ansible-playbook -i hosts playbooks/docker.yml --syntax-check"
   - "ansible-playbook -i hosts playbooks/rbenv.yml --syntax-check"
   - "ansible-playbook -i hosts site.yml --syntax-check"
 
