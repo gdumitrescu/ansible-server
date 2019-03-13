@@ -1,0 +1,31 @@
+---
+- name: goenv
+  hosts: all
+  serial: 1
+
+  tasks:
+  - name: goenv => clone goenv repo
+    git:
+      repo: https://github.com/syndbg/goenv.git
+      dest: ~/.goenv/
+  - name: goenv => configure
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK GOENV"
+      block: |
+        # goenv
+        export GOENV_ROOT="$HOME/.goenv"
+        export PATH="$GOENV_ROOT/bin:$PATH"
+        eval "$(goenv init -)"
+
+        export GOPATH=$HOME/go
+        export PATH=$PATH:$GOPATH/bin
+      insertbefore: EOF
+
+  post_tasks:
+  - name: goenv => version
+    command: '~/.goenv/bin/goenv --version'
+  - name: goenv => install go
+    command: '~/.goenv/bin/goenv install 1.12.0'
+  - name: goenv => configure global go
+    command: '~/.goenv/bin/goenv global 1.12.0'
