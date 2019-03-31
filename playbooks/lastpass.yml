@@ -1,0 +1,42 @@
+---
+- name: lastpass
+  hosts: all
+  serial: 1
+
+  pre_tasks:
+  # For Debian (testing/experimental) and Ubuntu >= 18.04
+  - name: lastpass => install required packages
+    become: yes
+    apt:
+      update_cache: yes
+      state: present
+      pkg:
+        - bash-completion
+        - build-essential
+        - ca-certificates
+        - cmake
+        - libcurl4
+        - libcurl4-openssl-dev
+        - libssl-dev
+        - libssl1.1
+        - libxml2
+        - libxml2-dev
+        - pkg-config
+        - xclip
+
+  tasks:
+  - name: lastpass => download
+    unarchive:
+      src: https://github.com/lastpass/lastpass-cli/releases/download/v1.3.2/lastpass-cli-1.3.2.tar.gz
+      dest: /tmp
+      remote_src: yes
+  - name: lastpass => build
+    make:
+      chdir: /tmp/lastpass-cli-1.3.2
+  - name: lastpass => install
+    become: yes
+    make:
+      target: install
+      chdir: /tmp/lastpass-cli-1.3.2
+  - name: lastpass => verify
+    command: lpass --version
