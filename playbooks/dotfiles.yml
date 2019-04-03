@@ -1,0 +1,59 @@
+---
+- name: dotfiles
+  hosts: all
+  serial: 1
+
+  pre_tasks:
+  - name: dotfiles => install required packages
+    become: yes
+    apt:
+      update_cache: yes
+      state: present
+      pkg:
+        - exuberant-ctags
+        - git
+        - stow
+        - vim
+  - name: dotfiles => clone dotfiles repo
+    git:
+      repo: https://github.com/gdumitrescu/dotfiles.git
+      dest: $HOME/.dotfiles
+
+  tasks:
+  - name: dotfiles => gem
+    command: stow gem
+    args:
+      chdir: $HOME/.dotfiles
+  - name: dotfiles => git
+    command: stow git
+    args:
+      chdir: $HOME/.dotfiles
+  - name: dotfiles => git branch configure
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK GIT"
+      block: |
+        # git
+        parse_git_branch() {
+            git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+        }
+        export PS1="\u@\h \${PWD}\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+      insertbefore: EOF
+  - name: dotfiles => input
+    command: stow input
+    args:
+      chdir: $HOME/.dotfiles
+  - name: dotfiles => tmux
+    command: stow tmux
+    args:
+      chdir: $HOME/.dotfiles
+  - name: dotfiles => vim
+    command: stow vim
+    args:
+      chdir: $HOME/.dotfiles
+  - name: dotfiles => vim clone vundle
+    git:
+      repo: https://github.com/VundleVim/Vundle.vim.git
+      dest: $HOME/.vim/bundle/Vundle.vim
+  - name: dotfiles => vim install bundles
+    command: vim +BundleInstall +qall
