@@ -17,15 +17,7 @@ install:
 
 script:
   # syntax check
-  - "ansible-playbook -i hosts playbooks/bootstrap.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/apt-install.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/apt-update.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/docker.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/goenv.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/hashicorp.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/lastpass.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/nvm.yml --syntax-check"
-  - "ansible-playbook -i hosts playbooks/rbenv.yml --syntax-check"
+  - "ansible-playbook -i hosts playbooks/*.yml --syntax-check"
   - "ansible-playbook -i hosts site.yml --syntax-check"
 
   # playbook test
