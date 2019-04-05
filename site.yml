@@ -13,3 +13,4 @@
 # - import_playbook: playbooks/lastpass.yml
 # - import_playbook: playbooks/nvm.yml
 - import_playbook: playbooks/rbenv.yml
+- import_playbook: playbooks/virtualbox.yml
