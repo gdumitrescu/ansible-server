@@ -6,6 +6,7 @@
 - import_playbook: playbooks/bootstrap.yml
 - import_playbook: playbooks/apt-install.yml
 # - import_playbook: playbooks/apt-update.yml
+# - import_playbook: playbooks/bosh-utils.yml
 - import_playbook: playbooks/docker.yml
 # - import_playbook: playbooks/dotfiles.yml
 - import_playbook: playbooks/goenv.yml
