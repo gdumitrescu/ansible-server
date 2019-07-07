@@ -15,7 +15,9 @@
         - ipcalc
         - lsof
         - mc
+        - monit
         - nmap
+        - pssh
         - rsync
         - stow
         - tig
