@@ -1,0 +1,23 @@
+---
+- name: tfenv
+  hosts: all
+
+  tasks:
+  - name: tfenv => clone
+    git:
+      repo: https://github.com/tfutils/tfenv.git
+      dest: '~/.tfenv'
+  - name: tfenv => configure
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK TFENV"
+      block: |
+        # tfenv
+        export PATH="$HOME/.tfenv/bin:$PATH"
+      insertbefore: EOF
+
+  post_tasks:
+  - name: tfenv => install latest
+    command: '~/.tfenv/bin/tfenv install latest'
+  - name: tfenv => configure global tfenv
+    command: '~/.tfenv/bin/tfenv use latest'
