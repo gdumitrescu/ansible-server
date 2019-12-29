@@ -1,0 +1,25 @@
+---
+language: python
+python: "2.7"
+
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+    - os: linux
+      dist: xenial
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  - pip install ansible
+
+script:
+  # syntax check
+  - "ansible-playbook -i hosts playbooks/*.yml --syntax-check"
+  - "ansible-playbook -i hosts site.yml --syntax-check"
+
+  # playbook test
+  - "ansible-playbook -i hosts site.yml --connection=local"
+
