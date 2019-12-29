@@ -7,6 +7,7 @@
 - import_playbook: playbooks/apt-install.yml
 
 - import_playbook: playbooks/bin-hashicorp.yml
+- import_playbook: playbooks/bin-kubernetes.yml
 
 - import_playbook: playbooks/docker.yml
 

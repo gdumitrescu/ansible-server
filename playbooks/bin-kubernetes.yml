@@ -1,0 +1,77 @@
+---
+- name: bin-kubernetes
+  hosts: all
+  serial: 1
+
+  pre_tasks:
+  - name: bin => mkdir
+    file:
+      path: $HOME/.bin
+      state: directory
+  - name: bin => configure
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK"
+      block: |
+        export PATH=$PATH:~/.bin
+      insertbefore: EOF
+
+  tasks:
+  - name: bin => helm
+    tags: helm
+    unarchive:
+      src: https://get.helm.sh/helm-v3.0.2-linux-amd64.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      exclude:
+        - README.md
+        - LICENSE
+      mode: 0755
+      extra_opts: [--strip-components=1]
+  - name: bin => kelda
+    tags: kelda
+    unarchive:
+      src: https://update.kelda.io/?file=kelda&release=latest&token=install&os=linux
+      dest: $HOME/.bin
+      remote_src: yes
+      mode: 0755
+  - name: bin => kubeadm
+    tags: kubeadm
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubeadm
+      dest: $HOME/.bin/kubeadm
+      mode: 0755
+  - name: bin => kubectl
+    tags: kubectl
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl
+      dest: $HOME/.bin/kubectl
+      mode: 0755
+  - name: bin => kubectl autocomplete
+    tags: kubectl
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK KUBECTL"
+      block: |
+        # kubectl
+        source <(kubectl completion bash)
+      insertbefore: EOF
+  - name: bin => kubelet
+    tags: kubelet
+    get_url:
+      url: https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubelet
+      dest: $HOME/.bin/kubelet
+      mode: 0755
+  - name: bin => skaffold
+    tags: skaffold
+    get_url:
+      url: https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+      dest: $HOME/.bin/skaffold
+      mode: 0755
+  - name: bin => tilt
+    tags: tilt
+    unarchive:
+      src: https://github.com/windmilleng/tilt/releases/download/v0.10.25/tilt.0.10.25.linux.x86_64.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      mode: 0755
