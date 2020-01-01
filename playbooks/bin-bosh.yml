@@ -1,5 +1,5 @@
 ---
-- name: bosh-utils
+- name: bin-bosh
   hosts: all
   serial: 1
 
@@ -32,11 +32,11 @@
   tasks:
   - name: bosh => bosh-bootloader
     get_url:
-      url: https://github.com/cloudfoundry/bosh-bootloader/releases/download/v8.1.0/bbl-v8.1.0_linux_x86-64
+      url: https://github.com/cloudfoundry/bosh-bootloader/releases/download/v8.4.0/bbl-v8.4.0_linux_x86-64
       dest: $HOME/.bin/bbl
       mode: 0755
   - name: bosh => bosh-cli
     get_url:
-      url: https://github.com/cloudfoundry/bosh-cli/releases/download/v5.4.0/bosh-cli-5.4.0-linux-amd64
+      url: https://github.com/cloudfoundry/bosh-cli/releases/download/v6.1.1/bosh-cli-6.1.1-linux-amd64
       dest: $HOME/.bin/bosh
       mode: 0755
