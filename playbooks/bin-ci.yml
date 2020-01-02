@@ -1,0 +1,47 @@
+---
+- name: bin-ci
+  hosts: all
+  serial: 1
+
+  pre_tasks:
+  - name: bin => mkdir
+    file:
+      path: $HOME/.bin
+      state: directory
+  - name: bin => configure
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK"
+      block: |
+        export PATH=$PATH:~/.bin
+      insertbefore: EOF
+
+  tasks:
+  - name: bin => circleci-cli
+    tags: circleci
+    unarchive:
+      src: https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.5879/circleci-cli_0.1.5879_linux_amd64.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      exclude:
+        - client
+        - md_docs
+      mode: 0755
+      extra_opts: [--strip-components=1]
+  - name: bin => codefresh-cli
+    tags: codefresh
+    unarchive:
+      src: https://github.com/codefresh-io/cli/releases/download/v0.39.6/codefresh-v0.39.6-linux-x64.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      exclude:
+        - README.md
+        - LICENSE
+      mode: 0755
+  - name: bin => drone-cli
+    tags: drone
+    unarchive:
+      src: https://github.com/drone/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      mode: 0755
