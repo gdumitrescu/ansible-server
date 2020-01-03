@@ -39,6 +39,6 @@
 
   post_tasks:
   - name: rbenv => install ruby
-    command: '~/.rbenv/bin/rbenv install 2.4.5'
+    command: '~/.rbenv/bin/rbenv install 2.5.3'
   - name: rbenv => configure global ruby
-    command: '~/.rbenv/bin/rbenv global 2.4.5'
+    command: '~/.rbenv/bin/rbenv global 2.5.3'
