@@ -35,6 +35,12 @@
       dest: $HOME/.bin
       remote_src: yes
       mode: 0755
+  - name: bin => kompose
+    tags: kompose
+    get_url:
+      url: https://github.com/kubernetes/kompose/releases/latest/download/kompose-linux-amd64
+      dest: $HOME/.bin/kompose
+      mode: 0755
   - name: bin => kubeadm
     tags: kubeadm
     get_url:
