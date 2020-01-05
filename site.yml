@@ -9,6 +9,7 @@
 - import_playbook: playbooks/bin-ci.yml
 - import_playbook: playbooks/bin-hashicorp.yml
 - import_playbook: playbooks/bin-kubernetes.yml
+- import_playbook: playbooks/bin-miniclusters.yml
 
 - import_playbook: playbooks/docker.yml
 

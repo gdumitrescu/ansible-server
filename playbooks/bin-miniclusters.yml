@@ -1,0 +1,42 @@
+---
+- name: bin-minis
+  hosts: all
+  serial: 1
+
+  pre_tasks:
+  - name: bin => mkdir
+    file:
+      path: $HOME/.bin
+      state: directory
+  - name: bin => configure
+    blockinfile:
+      path: '~/.bashrc'
+      marker: "# {mark} ANSIBLE MANAGED BLOCK"
+      block: |
+        export PATH=$PATH:~/.bin
+      insertbefore: EOF
+
+  tasks:
+  - name: bin => minikube
+    tags: minikube
+    get_url:
+      url:  https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+      dest: $HOME/.bin/minikube
+      mode: 0755
+  - name: bin => minishift
+    tags: minishift
+    unarchive:
+      src: https://github.com/minishift/minishift/releases/download/v1.34.2/minishift-1.34.2-linux-amd64.tgz
+      dest: $HOME/.bin
+      remote_src: yes
+      mode: 0755
+      extra_opts: [--strip-components=1]
+      exclude:
+        - LICENSE
+        - README.*
+  - name: bin => miniswarm
+    tags: miniswarm
+    get_url:
+      url: https://raw.githubusercontent.com/aelsabbahy/miniswarm/master/miniswarm
+      dest: $HOME/.bin/miniswarm
+      mode: 0755
