@@ -77,7 +77,10 @@
   - name: bin => tilt
     tags: tilt
     unarchive:
-      src: https://github.com/windmilleng/tilt/releases/download/v0.10.25/tilt.0.10.25.linux.x86_64.tar.gz
+      src: https://github.com/windmilleng/tilt/releases/download/v0.10.26/tilt.0.10.26.linux.x86_64.tar.gz
       dest: $HOME/.bin
       remote_src: yes
       mode: 0755
+      exclude:
+        - LICENSE
+        - README.*
