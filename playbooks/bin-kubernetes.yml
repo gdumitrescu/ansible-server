@@ -17,16 +17,30 @@
       insertbefore: EOF
 
   tasks:
-  - name: bin => helm
-    tags: helm
+  - name: bin => helm2
+    tags: [helm, helm2]
+    unarchive:
+      src: https://get.helm.sh/helm-v2.16.1-linux-amd64.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      mode: 0755
+      exclude:
+        - LICENSE
+        - README.*
+      extra_opts: [--strip-components=1]
+  - name: bin => helm2
+    tags: [helm, helm2]
+    shell: "mv $HOME/.bin/helm $HOME/.bin/helm2"
+  - name: bin => helm3
+    tags: [helm, helm3]
     unarchive:
       src: https://get.helm.sh/helm-v3.0.2-linux-amd64.tar.gz
       dest: $HOME/.bin
       remote_src: yes
-      exclude:
-        - README.md
-        - LICENSE
       mode: 0755
+      exclude:
+        - LICENSE
+        - README.*
       extra_opts: [--strip-components=1]
   - name: bin => kelda
     tags: kelda
