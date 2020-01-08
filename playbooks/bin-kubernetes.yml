@@ -24,10 +24,10 @@
       dest: $HOME/.bin
       remote_src: yes
       mode: 0755
+      extra_opts: [--strip-components=1]
       exclude:
         - LICENSE
         - README.*
-      extra_opts: [--strip-components=1]
   - name: bin => helm2
     tags: [helm, helm2]
     shell: "mv $HOME/.bin/helm $HOME/.bin/helm2"
@@ -38,10 +38,10 @@
       dest: $HOME/.bin
       remote_src: yes
       mode: 0755
+      extra_opts: [--strip-components=1]
       exclude:
         - LICENSE
         - README.*
-      extra_opts: [--strip-components=1]
   - name: bin => kelda
     tags: kelda
     unarchive:
@@ -81,6 +81,13 @@
     get_url:
       url: https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubelet
       dest: $HOME/.bin/kubelet
+      mode: 0755
+  - name: bin => kustomize
+    tags: kustomize
+    unarchive:
+      src: https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.5.3/kustomize_v3.5.3_linux_amd64.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
       mode: 0755
   - name: bin => skaffold
     tags: skaffold
