@@ -42,6 +42,13 @@
       exclude:
         - LICENSE
         - README.*
+  - name: bin => istioctl
+    tags: istioctl
+    unarchive:
+      src: https://github.com/istio/istio/releases/download/1.4.3/istioctl-1.4.3-linux.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      mode: 0755
   - name: bin => kelda
     tags: kelda
     unarchive:
