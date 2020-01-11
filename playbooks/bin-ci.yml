@@ -45,3 +45,10 @@
       dest: $HOME/.bin
       remote_src: yes
       mode: 0755
+  - name: bin => reconfigure-pipelines
+    tags: concourse
+    unarchive:
+      src: https://github.com/pivotal-cf/reconfigure-pipeline/releases/latest/download/reconfigure-pipeline-linux.tar.gz
+      dest: $HOME/.bin
+      remote_src: yes
+      mode: 0755
